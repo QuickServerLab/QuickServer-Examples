@@ -1,0 +1,72 @@
+<project name="Examples.Project" default="jar" basedir=".">
+    <property name="app.name"   value="Examples" />
+    <property name="build.dir"  value="build/classes" />
+	<property name="dist.dir"   value="dist" />
+	<property name="cmp.args"  value="-source 1.4" />
+
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="src/main/" destdir="${build.dir}" debug="on" deprecation="on" optimize="on">
+            <include name="**/*.java"/>
+			 <classpath>
+                <pathelement location="lib/QuickServer.jar" />
+				<pathelement location="lib/commons-pool.jar" />
+				<pathelement location="lib/commons-logging.jar" />
+				<pathelement location="lib/commons-digester.jar" />
+                <pathelement path="" />
+            </classpath>
+			<compilerarg line="${cmp.args}" />
+        </javac>
+		<copy todir="${build.dir}/chatserver/client" overwrite="yes">
+			<fileset dir="src/main/chatserver/client/">
+				<include name="*.gif"/>
+			</fileset>
+		 </copy>
+    </target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="jar" depends="compile">
+      <mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/chatserver.jar" 
+			basedir="${build.dir}" includes="chatserver/*"/>
+		<jar jarfile="${dist.dir}/chatclient.jar" 
+			basedir="${build.dir}" includes="chatserver/client/*" 
+			manifest="src/main/chatserver/client/ChatRoom.MF"/>
+		<jar jarfile="${dist.dir}/cmdserver.jar" 
+			basedir="${build.dir}" includes="cmdserver/**"/>
+		<jar jarfile="${dist.dir}/dateserver.jar" 
+			basedir="${build.dir}" includes="dateserver/**"/>
+		<jar jarfile="${dist.dir}/echoserver.jar" 
+			basedir="${build.dir}" includes="echoserver/**"/>
+		<jar jarfile="${dist.dir}/echowebserver.jar" 
+			basedir="${build.dir}" includes="echowebserver/**"/>
+		<jar jarfile="${dist.dir}/ftpserver.jar" 
+			basedir="${build.dir}" includes="ftpserver/**"/>
+		<jar jarfile="${dist.dir}/pipeserver.jar" 
+			basedir="${build.dir}" includes="pipeserver/**"/>
+		<jar jarfile="${dist.dir}/xmladder.jar" 
+			basedir="${build.dir}" includes="xmladder/**"/>
+		<jar jarfile="${dist.dir}/filesrv.jar" 
+			basedir="${build.dir}" includes="filesrv/**"/>
+		<jar jarfile="${dist.dir}/broadcastserver.jar" 
+			basedir="${build.dir}" includes="broadcastserver/**"/>
+    </target>
+	
+	<path id="project.classpath">
+		<fileset dir="./lib/">
+			<include name="**/*.jar"/>
+		</fileset>		
+	</path>
+	
+	<target name="EchoServer" depends="jar">
+		<java fork="yes" jar=".\lib\QuickServer.jar"
+            taskname="EchoServer" failonerror="true">
+			<arg line="-load conf/EchoServer.xml"/>
+		</java>
+	</target>
+
+</project>
+

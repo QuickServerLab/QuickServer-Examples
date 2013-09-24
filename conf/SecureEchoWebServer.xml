@@ -1,0 +1,108 @@
+<quickserver>
+	<name>EchoWebServer v 1.2</name>
+	<port>8080</port>
+	<bind-address>0.0.0.0</bind-address>
+	<client-command-handler>
+		echowebserver.EchoWSCommandHandler
+	</client-command-handler>
+	<client-data>echowebserver.EchoWSData</client-data>
+	<default-data-mode>
+		<data-type-in>Byte</data-type-in>
+		<data-type-out>String</data-type-out>
+	</default-data-mode>
+	<!-- in milliseconds -->
+	<timeout>15000</timeout>
+	<application-jar-path>
+		../dist/echowebserver.jar
+	</application-jar-path>
+
+	<console-logging-level>WARNING</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleWithThreadFormatter
+	</console-logging-formatter>
+	<communication-logging>
+		<enable>true</enable>
+	</communication-logging>
+
+	<server-mode>
+		<blocking>true</blocking>
+	</server-mode>
+
+	<server-hooks>
+		<class-name>echowebserver.PrepareHook</class-name>
+	</server-hooks>
+
+	<init-server-hooks>
+		<class-name>echowebserver.SetupLoggingHook</class-name>
+	</init-server-hooks>
+
+	<object-pool>
+		<max-active>10</max-active>
+		<max-idle>1</max-idle>
+		<init-size>1</init-size>
+	</object-pool>
+
+	<qsadmin-server>
+		<name>QSAdminServer v 1.2</name>
+		<port>9080</port>
+		<bind-address>127.0.0.1</bind-address>
+		<communication-logging>
+			<enable>false</enable>
+		</communication-logging>
+		<command-shell>
+			<enable>true</enable>
+			<prompt-name>QSAdmin</prompt-name>
+		</command-shell>
+		<server-mode>
+			<blocking>false</blocking>
+		</server-mode>
+
+		<object-pool>
+			<max-active>10</max-active>
+			<max-idle>1</max-idle>
+			<init-size>1</init-size>
+		</object-pool>
+	</qsadmin-server>
+
+	<secure>
+		<enable>true</enable>
+		<load>true</load>
+		<port>8443</port>
+		<protocol>SSLv3</protocol>
+		<client-auth-enable>false</client-auth-enable> 
+		<secure-store>
+			<type>JKS</type>
+			<algorithm>SunX509</algorithm>
+			<!--<provider>SUN</provider>-->
+			<key-store-info>
+				<store-file>user1.keystore</store-file>
+				<!--If <store-password> is not specified QuickServer will prompt-->
+				<store-password>user1spass</store-password>
+				<!--If <key-password> is not specified QuickServer will prompt-->
+				<key-password>user1kpass</key-password>
+			</key-store-info>
+			<!--
+			<trust-store-info>
+				<store-file>truststore</store-file>
+				<store-password>changeit</store-password>
+				<type>JKS</type>
+				<provider>SUN</provider>
+			</key-store-info>
+			-->
+			<!--
+			<secure-store-manager>
+				org.quickserver.security.SecureStoreManager
+			</secure-store-manager>
+			-->
+		</secure-store>
+	</secure>
+
+	<advanced-settings>
+		<charset>ISO-8859-1</charset>
+		<use-direct-byte-buffer>true</use-direct-byte-buffer>
+		<!--<byte-buffer-size>61440</byte-buffer-size>-->
+		<backlog>1024</backlog>		
+		<socket-linger>-1</socket-linger>
+		<debug-non-blocking-mode>true</debug-non-blocking-mode> 
+	</advanced-settings>
+</quickserver>

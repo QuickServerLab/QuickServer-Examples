@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<quickserver>
+	<name>QuickFTPServer v 0.2</name>
+	<port>21</port>
+	<bind-address>0.0.0.0</bind-address>
+	<client-command-handler>
+		ftpserver.CommandHandler
+	</client-command-handler>
+	<client-data>
+		ftpserver.Data
+	</client-data>
+	<client-authentication-handler>
+		ftpserver.Authenticator
+	</client-authentication-handler>
+
+	<max-connection>10</max-connection>
+	<max-connection-msg>421 Server Busy</max-connection-msg>
+
+	<server-mode>
+		<blocking>true</blocking>
+	</server-mode>
+
+	<!-- Config QSAdminServer -->
+	<qsadmin-server>
+		<port>9821</port>
+		<server-banner>
+			QSAdminServer Started on port : 9821
+		</server-banner>
+		<command-plugin>
+			ftpserver.QSAdminCommandPlugin
+		</command-plugin>
+		<command-shell>
+			<enable>true</enable>
+			<prompt-name>FTPServer</prompt-name>
+		</command-shell>
+		<communication-logging>
+			<enable>false</enable>
+		</communication-logging>
+		<server-mode>
+			<blocking>false</blocking>
+		</server-mode>
+	</qsadmin-server>
+	<!-- Config QSAdminServer -->
+
+	<!-- Config Console Logging -->
+	<console-logging-level>INFO</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleFormatter
+	</console-logging-formatter>
+	<!-- Config Console Logging -->
+
+	<!--
+	<application-configuration>
+		<property>
+			<property-name>FTP_ROOT</property-name>
+			<property-value>G:\MP3</property-value>
+		</property>
+	</application-configuration>
+	-->	
+
+	<communication-logging>
+		<enable>true</enable>
+	</communication-logging>
+
+	<init-server-hooks>
+		<class-name>ftpserver.SetupLoggingHook</class-name>
+	</init-server-hooks>
+
+	<application-jar-path>../dist/ftpserver.jar</application-jar-path>
+</quickserver>

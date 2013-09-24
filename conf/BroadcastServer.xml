@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<quickserver>
+	<name>BroadcastServer</name>
+	<port>8255</port>
+	<bind-address>0.0.0.0</bind-address>
+
+	<!-- business logic classes -->
+	<client-event-handler>
+		broadcastserver.CommandHandler
+	</client-event-handler>
+	<client-command-handler>
+		broadcastserver.CommandHandler
+	</client-command-handler>
+	<client-data>
+		broadcastserver.Data
+	</client-data>
+	<!-- business logic classes -->
+	
+	<max-connection-msg>Server Busy - Max Connection Reached</max-connection-msg>
+	<timeout-msg>-ERR Timeout</timeout-msg>
+	<max-auth-try-msg>-ERR Max Auth Try Reached</max-auth-try-msg>
+
+	<server-mode>
+		<blocking>false</blocking>
+	</server-mode>
+
+	<default-data-mode>
+		<data-type-in>String</data-type-in>
+		<data-type-out>String</data-type-out>
+	</default-data-mode>	
+
+	<!-- in milliseconds -->
+	<timeout>60000</timeout>
+	<max-connection>-1</max-connection>	
+	<max-auth-try>5</max-auth-try>	
+
+	<console-logging-level>INFO</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleFormatter
+	</console-logging-formatter>
+
+	<object-pool>
+		<max-active>-1</max-active>
+		<max-idle>50</max-idle>
+		<init-size>20</init-size>
+
+		<thread-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>50</max-idle>
+			<init-size>20</init-size>
+		</thread-object-pool>
+
+		<client-handler-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>50</max-idle>
+			<init-size>30</init-size>
+		</client-handler-object-pool>
+
+		<byte-buffer-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>50</max-idle>
+			<init-size>20</init-size>
+		</byte-buffer-object-pool>	
+	</object-pool>
+
+	<communication-logging>
+		<enable>false</enable>
+	</communication-logging>	
+
+	<application-configuration>
+		<prompt-type>gui</prompt-type>
+		<!--<prompt-type>console</prompt-type>-->
+		<!--
+		<property>
+			<property-name>APP_PARAM1</property-name>
+			<property-value>test value</property-value>
+		</property>
+		<property>
+			<property-name>APP_SECRET1</property-name>
+		</property>
+		-->
+	</application-configuration>
+
+	<access-constraint>
+	  <ip-filter> 
+	    <enable>false</enable>
+	    <allow-access>false</allow-access>
+	    <ip-collection>
+		  <client-ip-address>127.0.0.1</client-ip-address> 
+	    </ip-collection>
+	  </ip-filter> 
+	</access-constraint>
+
+	<application-jar-path>../dist/broadcastserver.jar</application-jar-path>
+
+	<init-server-hooks>
+		<class-name>broadcastserver.SetupLoggingHook</class-name>
+	</init-server-hooks>
+
+	<advanced-settings>
+		<charset>ISO-8859-1</charset>
+		<use-direct-byte-buffer>true</use-direct-byte-buffer>
+		<!--<byte-buffer-size>61440</byte-buffer-size>-->
+		<backlog>1024</backlog>		
+		<socket-linger>-1</socket-linger>
+		<debug-non-blocking-mode>false</debug-non-blocking-mode> 
+	</advanced-settings>
+
+
+	<qsadmin-server>
+		<port>8256</port>
+		<bind-address>127.0.0.1</bind-address>
+
+		<command-shell>
+			<enable>true</enable>
+		</command-shell>
+
+		<communication-logging>
+			<enable>false</enable>
+		</communication-logging>
+
+		<server-mode>
+			<blocking>false</blocking>
+		</server-mode>
+
+		<access-constraint>
+		  <ip-filter> 
+			<enable>false</enable>
+			<allow-access>true</allow-access>
+			<ip-collection>
+			  <client-ip-address>127.0.0.1</client-ip-address> 
+			 <client-ip-address>192.168.1.100</client-ip-address>
+			</ip-collection>
+		  </ip-filter> 
+		</access-constraint> 
+	</qsadmin-server>
+
+</quickserver>

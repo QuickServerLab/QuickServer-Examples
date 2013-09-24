@@ -1,0 +1,88 @@
+<quickserver>
+	<name>Filesrv v 0.1</name>
+	<port>8821</port>
+	<bind-address>0.0.0.0</bind-address>
+
+	<server-mode>
+		<blocking>false</blocking>
+	</server-mode>
+
+	<client-event-handler>
+		filesrv.CommandHandler
+	</client-event-handler>	
+	<client-command-handler>
+		filesrv.CommandHandler
+	</client-command-handler>	
+	<client-write-handler>
+		filesrv.CommandHandler
+	</client-write-handler>
+	<client-data>filesrv.Data</client-data>
+	<init-server-hooks>
+		<class-name>filesrv.SetupLoggingHook</class-name>
+	</init-server-hooks>
+
+	<server-hooks>
+		<class-name>filesrv.PrepareHook</class-name>
+	</server-hooks>
+
+	<default-data-mode>
+		<data-type-out>Byte</data-type-out>
+	</default-data-mode>
+
+	<!-- in milliseconds -->
+	<timeout>120000</timeout>
+	<timeout-msg>Connection-timeout</timeout-msg>
+	<max-auth-try>5</max-auth-try>
+
+	<max-auth-try-msg>Error Max Auth</max-auth-try-msg>
+	<max-connection>-1</max-connection>
+	<max-connection-msg>Server Busy</max-connection-msg>
+	
+	<console-logging-level>INFO</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleFormatter
+	</console-logging-formatter>
+
+	<communication-logging>
+		<enable>true</enable>
+	</communication-logging>
+
+	<qsadmin-server>
+		<name>QSAdminServer</name>
+		<port>8921</port>
+		<bind-address>127.0.0.1</bind-address>
+		<command-shell>
+			<enable>true</enable>
+			<prompt-name>Filesrv</prompt-name>
+		</command-shell>
+
+		<server-mode>
+			<blocking>false</blocking>
+		</server-mode>
+	</qsadmin-server>
+
+	<application-jar-path>../dist/filesrv.jar</application-jar-path>
+
+	<advanced-settings>		
+		<charset>ISO-8859-1</charset>
+		<use-direct-byte-buffer>true</use-direct-byte-buffer>
+		<byte-buffer-size>1048576</byte-buffer-size>
+		<backlog>0</backlog>		
+		<socket-linger>-1</socket-linger>
+		<debug-non-blocking-mode>false</debug-non-blocking-mode>
+		<max-threads-for-nio-write>1</max-threads-for-nio-write>
+	</advanced-settings>
+
+	<application-configuration>
+		<!--
+		<property>
+			<property-name>HFTP_ROOT</property-name>
+			<property-value>c:\mp3</property-value>
+		</property>
+		-->
+		<property>
+			<property-name>HFTP_ROOT</property-name>
+			<property-value>dist</property-value>
+		</property>
+	</application-configuration>
+</quickserver>

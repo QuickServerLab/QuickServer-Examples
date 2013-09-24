@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<quickserver>
+	<name>PipeServer v 1.0</name>
+	<port>4444</port>
+	<bind-address>0.0.0.0</bind-address>
+
+	<client-event-handler>
+		pipeserver.CommandHandler
+	</client-event-handler>
+	<client-binary-handler>
+		pipeserver.CommandHandler
+	</client-binary-handler>
+	<client-authentication-handler>
+		pipeserver.Authenticator
+	</client-authentication-handler>
+	<client-data>
+		pipeserver.Data
+	</client-data>
+
+	<default-data-mode>
+		<data-type-in>Binary</data-type-in>
+		<data-type-out>Binary</data-type-out>
+	</default-data-mode>
+
+	<server-mode>
+		<blocking>false</blocking>
+	</server-mode>
+
+	<max-connection>10</max-connection>
+	<console-logging-level>INFO</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleFormatter
+	</console-logging-formatter>
+	<communication-logging>
+		<enable>true</enable>
+	</communication-logging>
+
+	<application-configuration>
+		<property>
+			<property-name>REMOTE_HOST</property-name>
+			<property-value>127.0.0.1</property-value>
+		</property>
+		<property>
+			<property-name>REMOTE_PORT</property-name>
+			<property-value>4123</property-value>
+		</property>
+	</application-configuration>
+
+
+	<!-- Config QSAdminServer -->
+	<qsadmin-server>
+		<port>4445</port>
+		<server-banner>
+			QSAdminServer Started on port : 4445
+		</server-banner>
+		<command-shell>
+			<enable>true</enable>
+		</command-shell>
+		<communication-logging>
+			<enable>false</enable>
+		</communication-logging>
+	</qsadmin-server>
+	<!-- Config QSAdminServer -->
+</quickserver>

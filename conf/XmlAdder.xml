@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<quickserver>
+	<name>XmlAdder v 1.0</name>
+	<port>2222</port>
+	<bind-address>0.0.0.0</bind-address>
+
+	<client-event-handler>
+		xmladder.CommandHandler
+	</client-event-handler>
+	<client-command-handler>
+		xmladder.CommandHandler
+	</client-command-handler>
+	<client-data>
+		xmladder.Data
+	</client-data>
+	
+	<default-data-mode>
+		<data-type-in>Byte</data-type-in>
+		<data-type-out>Byte</data-type-out>
+	</default-data-mode>
+
+	<!--<max-connection>10</max-connection>-->
+	<console-logging-level>INFO</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleFormatter
+	</console-logging-formatter>
+	<communication-logging>
+		<enable>false</enable>
+	</communication-logging>
+	<init-server-hooks>
+		<class-name>
+			org.quickserver.util.logging.SimpleJDKLoggingHook
+		</class-name>
+	</init-server-hooks>
+
+	<server-mode>
+		<blocking>true</blocking>
+	</server-mode>
+
+	<object-pool>
+		<max-active>-1</max-active>
+		<max-idle>200</max-idle>
+
+		<thread-object-pool>
+			<max-active>500</max-active>
+			<max-idle>100</max-idle>
+		</thread-object-pool>
+	</object-pool>
+
+	<advanced-settings>
+		<charset>ISO-8859-1</charset>
+		<use-direct-byte-buffer>true</use-direct-byte-buffer>
+		<!--<byte-buffer-size>61440</byte-buffer-size>-->
+		<backlog>1024</backlog>		
+		<socket-linger>-1</socket-linger>
+		<debug-non-blocking-mode>false</debug-non-blocking-mode> 
+	</advanced-settings>
+	
+	<!-- Config QSAdminServer -->
+	<qsadmin-server>
+		<port>2223</port>
+		<server-banner>
+			QSAdminServer Started on port : 2223
+		</server-banner>
+		<command-shell>
+			<enable>true</enable>
+		</command-shell>
+		<communication-logging>
+			<enable>false</enable>
+		</communication-logging>
+		<server-mode>
+			<blocking>false</blocking>
+		</server-mode>
+	</qsadmin-server>
+	<!-- Config QSAdminServer -->
+	
+	<application-jar-path>../dist/xmladder.jar</application-jar-path>
+</quickserver>

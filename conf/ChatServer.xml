@@ -1,0 +1,118 @@
+<quickserver>
+	<name>Chat Server v 2.0</name>
+	<port>7412</port>
+	<bind-address>0.0.0.0</bind-address>
+
+	<client-event-handler>
+		chatserver.ChatCommandHandler
+	</client-event-handler>
+	<client-command-handler>
+		chatserver.ChatCommandHandler
+	</client-command-handler>	
+	<client-data>
+		chatserver.ChatData
+	</client-data>	
+	<client-authentication-handler>
+		chatserver.ChatAuthenticator
+	</client-authentication-handler>
+
+	<server-mode>
+		<blocking>false</blocking>
+	</server-mode>
+	
+	<!-- 3 min. (in milliseconds) -->
+	<timeout>180000</timeout>
+	<console-logging-level>WARNING</console-logging-level>
+	<console-logging-formatter>
+		org.quickserver.util.logging.SimpleConsoleFormatter
+	</console-logging-formatter>
+
+	<communication-logging>
+		<enable>true</enable>
+	</communication-logging>
+
+	<object-pool>
+		<max-active>-1</max-active>
+		<max-idle>20</max-idle>
+
+		<thread-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>20</max-idle>
+		</thread-object-pool>
+
+		<client-handler-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>20</max-idle>
+		</client-handler-object-pool>
+
+		<byte-buffer-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>20</max-idle>
+		</byte-buffer-object-pool>
+
+		<client-data-object-pool>
+			<max-active>-1</max-active>
+			<max-idle>20</max-idle>
+		</client-data-object-pool>
+	</object-pool>
+
+	<qsadmin-server>
+		<name>QSAdminServer v 1.0</name>
+		<port>7413</port>
+		<bind-address>127.0.0.1</bind-address>
+
+		<server-mode>
+			<blocking>false</blocking>
+		</server-mode>
+
+		<client-authentication-handler>
+			chatserver.QsAdminAuthenticator
+		</client-authentication-handler>
+
+		<server-banner>
+		QSAdminServer Started on port : 7413
+		</server-banner>
+		
+		<command-shell>
+			<enable>true</enable>
+		</command-shell>
+
+		<communication-logging>
+			<enable>false</enable>
+		</communication-logging>
+
+		<access-constraint>
+		  <ip-filter> 
+			<enable>true</enable>
+			<allow-access>true</allow-access>
+			<ip-collection>
+			  <client-ip-address>127.0.0.1</client-ip-address> 
+			</ip-collection>
+		  </ip-filter> 
+		</access-constraint> 
+	</qsadmin-server>
+
+	<access-constraint>
+	  <ip-filter> 
+	    <enable>false</enable>
+	    <allow-access>false</allow-access>
+	    <ip-collection>
+		  <client-ip-address>127.0.0.1</client-ip-address> 
+	    </ip-collection>
+	  </ip-filter> 
+	</access-constraint> 
+
+	<application-jar-path>../dist/chatserver.jar</application-jar-path>
+		
+	<init-server-hooks>
+		<class-name>chatserver.SetupLoggingHook</class-name>
+	</init-server-hooks>
+
+	<advanced-settings>		
+		<charset>ISO-8859-1</charset>
+		<use-direct-byte-buffer>true</use-direct-byte-buffer>
+		<!--<byte-buffer-size>61440</byte-buffer-size>-->
+		<backlog>1024</backlog>		
+		<socket-linger>-1</socket-linger>
+	</advanced-settings>
+</quickserver>

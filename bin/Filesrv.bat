@@ -1,0 +1,1 @@
+@java -server -ea -jar .\lib\QuickServer.jar -load conf/Filesrv.xml
