@@ -34,7 +34,7 @@ public class EchoServer {
 	
 	public static void startFromXML(String s[])	{
 		QuickServer echoServer;		
-		String confFile = "conf"+File.separator+"EchoServer.xml";
+		String confFile = "./../conf"+File.separator+"EchoServer.xml";
 
 		try	{
 			echoServer = QuickServer.load(confFile);
