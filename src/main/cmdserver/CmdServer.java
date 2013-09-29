@@ -33,7 +33,7 @@ public class CmdServer {
 		QuickServer cmdServer=new QuickServer(cmdHandle);
 		cmdServer.setClientAuthenticationHandler(auth);
 		cmdServer.setClientData(data);
-		cmdServer.setPort(23);
+		cmdServer.setPort(8023);
 		cmdServer.setName("Cmd Server v "+VER);
 
 		//check if cmd args was passed
@@ -48,7 +48,7 @@ public class CmdServer {
 		adminServer.setCommunicationLogging(false);
 		try	{
 			cmdServer.startServer();
-			cmdServer.startQSAdminServer(124, null);
+			cmdServer.startQSAdminServer(8124, null);
 		} catch(AppException e){
 			System.out.println("Error in server : "+e);
 			e.printStackTrace();

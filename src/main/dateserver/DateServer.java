@@ -33,7 +33,7 @@ public class DateServer {
 
 		QuickServer myServer = new QuickServer(cmdHandle);
 		myServer.setClientAuthenticationHandler(auth);
-		myServer.setPort(125);
+		myServer.setPort(8125);
 		myServer.setName("Date Server v " + VER);
 		myServer.setClientObjectHandler(objHandle);
 

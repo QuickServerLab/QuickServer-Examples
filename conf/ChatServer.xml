@@ -17,7 +17,7 @@
 	</client-authentication-handler>
 
 	<server-mode>
-		<blocking>false</blocking>
+		<blocking>true</blocking>
 	</server-mode>
 	
 	<!-- 3 min. (in milliseconds) -->

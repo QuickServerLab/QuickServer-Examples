@@ -1,1 +1,1 @@
-@java -server -ea -jar .\..\dist\QuickServer.jar -load conf/SecureEchoWebServer.xml
+@java -server -ea -jar .\..\dist\QuickServer.jar -load ./../conf/SecureEchoWebServer.xml

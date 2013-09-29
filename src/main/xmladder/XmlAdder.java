@@ -32,7 +32,9 @@ public class XmlAdder {
 
 		QuickServer myServer = new QuickServer();
 		
-		String confFile = "conf"+File.separator+"XmlAdder.xml";
+		String confFile = "." + File.separator + ".." + File.separator +
+				"conf" + File.separator + "XmlAdder.xml";
+		
 		Object config[] = new Object[] {confFile};
 		if(myServer.initService(config)==true) {
 			try	{

@@ -54,7 +54,7 @@ public class PipeServer {
 			System.err.println("Could not create txtLog FileHandler : "+e);
 		}
 		//end of logger code
-		String confFile = "conf"+
+		String confFile = "."+File.separator+".."+File.separator +"conf"+
 			File.separator+"PipeServer.xml";
 		Object config[] = new Object[] {confFile};
 		if(myServer.initService(config)==true) {

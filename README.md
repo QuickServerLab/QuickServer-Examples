@@ -8,12 +8,10 @@ not taken security or performance has his main criteria.
 
 How To Run Examples
 -------------------
-Execute .sh or .bat file in the bin folder from the parent folder (not from bin folder)
+Execute .sh or .bat file from the bin folder.
 
-Eg: $sh ./bin/EchoServer.sh
-Eg: d:\QuickSerer-Example-Folder>.\bin\EchoServer.bat
-
-PS: If you face issue executing.. just copy the .bat or .sh file to the folder where this file is & run.
+Eg: $sh EchoServer.sh
+Eg: d:\QuickSerer-Example-Folder\bin>EchoServer.bat
 
 
 EchoServer v1.2

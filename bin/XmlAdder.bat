@@ -1,1 +1,1 @@
-@java -server -Xbatch -Dxmladder.AddNumberReq.performanceTest=false -Dorg.quickserver.util.logging.SimpleJDKLoggingHook.Level=INFO -cp %classpath%;.\lib\QuickServer.jar;.\dist\xmladder.jar xmladder.XmlAdder
+@java -server -Xbatch -Dxmladder.AddNumberReq.performanceTest=false -Dorg.quickserver.util.logging.SimpleJDKLoggingHook.Level=INFO -cp %classpath%;.\..\lib\QuickServer.jar;.\..\dist\xmladder.jar xmladder.XmlAdder

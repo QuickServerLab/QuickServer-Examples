@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <quickserver>
 	<name>QuickFTPServer v 0.2</name>
-	<port>21</port>
+	<port>8021</port>
 	<bind-address>0.0.0.0</bind-address>
 	<client-command-handler>
 		ftpserver.CommandHandler
