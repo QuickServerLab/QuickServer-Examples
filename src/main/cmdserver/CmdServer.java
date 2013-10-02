@@ -44,7 +44,7 @@ public class CmdServer {
 
 		//start admin server with default auth
 		QuickServer adminServer = cmdServer.getQSAdminServer().getServer();
-		adminServer.setServerBanner("QSAdminServer Started on port : "+124);
+		adminServer.setServerBanner("QSAdminServer Started on port : "+8124);
 		adminServer.setCommunicationLogging(false);
 		try	{
 			cmdServer.startServer();

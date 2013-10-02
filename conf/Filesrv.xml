@@ -82,7 +82,7 @@
 		-->
 		<property>
 			<property-name>HFTP_ROOT</property-name>
-			<property-value>dist</property-value>
+			<property-value>../dist</property-value>
 		</property>
 	</application-configuration>
 </quickserver>
