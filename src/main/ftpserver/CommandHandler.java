@@ -47,12 +47,23 @@ public class CommandHandler implements ClientCommandHandler {
 	}
 
 	public void lostConnection(ClientHandler handler) throws IOException {
-		logger.fine("Connection lost : "+
-			handler.getSocket().getInetAddress());
+		logger.log(Level.FINE, "Connection lost : {0}", handler.getSocket().getInetAddress());
 	}
 	public void closingConnection(ClientHandler handler) throws IOException {
-		logger.fine("Connection closed: " + 
-			handler.getSocket().getInetAddress());
+		logger.log(Level.FINE, "Connection closed: {0}", handler.getSocket().getInetAddress());
+	}
+	
+	private File makeFile(String temp) {
+		logger.fine("file1: "+temp);
+		
+		//temp = MyString.replaceAll(temp,"/","\\");
+		//temp = MyString.replaceAll(temp,"\\\\","\\");
+		
+		temp = MyString.replaceAll(temp,"//","/");
+		temp = MyString.replaceAll(temp,"\\","/");
+		
+		logger.fine("file2: "+temp);
+		return new File(temp);
 	}
 
 	public void handleCommand(ClientHandler handler, String command)
@@ -116,9 +127,8 @@ public class CommandHandler implements ClientCommandHandler {
 					temp_wDir = "/";
 				else
 					temp_wDir += "/"; //end
-				temp = MyString.replaceAll(data.root+temp_wDir,"/","\\");
-				temp = MyString.replaceAll(temp,"\\\\","\\");
-				File file = new File(temp);
+				
+				File file = makeFile(data.root+temp_wDir);
 				if(	file.canRead() ){
 					data.wDir = temp_wDir;
 					handler.sendClientMsg("250 Okay");
@@ -184,7 +194,7 @@ public class CommandHandler implements ClientCommandHandler {
 				}
 				data.server = new ServerSocket(0,1,ipAddr);
 				data.serverPort = data.server.getLocalPort();
-				logger.fine("pasv port "+data.serverPort);
+				logger.log(Level.FINE, "pasv port "+ data.serverPort);
 				int p1 = data.serverPort / 256;
 				int p2 = data.serverPort - p1*256;
 				ip_port += p1+","+p2;
@@ -277,14 +287,13 @@ public class CommandHandler implements ClientCommandHandler {
 				} else {
 					sfile = data.root + data.wDir + "/" + args;
 				}
-				temp = MyString.replaceAll(sfile,"/","\\");
-				temp = MyString.replaceAll(temp,"\\\\","\\");
-				File file = new File(temp);
+				
+				File file = makeFile(sfile);
 				if(file.canRead() && file.isFile()) {
 					handler.sendClientMsg("150 I see that file.");
 					//send file
 					try	{
-						data.sendFile(temp);
+						data.sendFile(sfile);
 						//close data connection when done
 						if(data.ip!=null)
 							data.socket.close();
@@ -296,6 +305,7 @@ public class CommandHandler implements ClientCommandHandler {
 					} catch (Exception e) {
 						data.closeDataServer = true;
 						handler.sendClientMsg("551 Error sending file : "+e);
+						logger.log(Level.WARNING, "Error: "+e, e);
 					}
 				} else {
 					handler.sendClientMsg("451 Sorry, that isn't a data file");
@@ -343,16 +353,14 @@ public class CommandHandler implements ClientCommandHandler {
 		} else if(ucCommand.startsWith("MKD")) {
 			//MAKE DIRECTORY
 			args = command.substring("MKD".length()).trim();
-			temp = MyString.replaceAll(data.root+data.wDir+args,"/","\\");
-			temp = MyString.replaceAll(temp,"\\\\","\\");
-			File file = new File(temp);
+			
+			File file = makeFile(data.root+data.wDir+args);
 			try	{
 				file.mkdir();
 				file.canRead();
 				temp = file.getAbsolutePath();
 				temp = "/"+MyString.replaceAll(temp,data.root,"");
 				temp = MyString.replaceAll(temp,"\\","/");
-				temp = MyString.replaceAll(temp,"//","/");
 				handler.sendClientMsg("257 \""+temp+"\" directory created");
 			} catch(Exception e) {
 				handler.sendClientMsg("521-Could not create dir \""+args+"\"");
@@ -372,9 +380,7 @@ public class CommandHandler implements ClientCommandHandler {
 			else
 				data.wDir = args;
 
-			temp = MyString.replaceAll(data.root+data.wDir,"/","\\");
-			temp = MyString.replaceAll(temp,"\\\\","\\");
-			File file = new File(temp);
+			File file = makeFile(data.root+data.wDir);
 			if(file.canRead() && file.isDirectory()) {
 				handler.sendClientMsg("250 Directory changed to "+data.wDir);
 			} else {
@@ -389,7 +395,7 @@ public class CommandHandler implements ClientCommandHandler {
 		} else if(ucCommand.startsWith("PWD")) {
 			//PRINT WORKING DIRECTORY
 			temp = MyString.replaceAll(data.wDir,"\"","\"\"");
-			handler.sendClientMsg("257 \""+data.wDir+"\"");
+			handler.sendClientMsg("257 \""+temp+"\"");
 		} else if(ucCommand.startsWith("LIST")) {
 			data.isTransferring = true;
 			if(ucCommand.equals("LIST")) {
@@ -399,9 +405,8 @@ public class CommandHandler implements ClientCommandHandler {
 				if(args.equals("-latr")) //not known
 					args="";
 			}
-			temp = MyString.replaceAll(data.root+data.wDir+args,"/","\\");
-			temp = MyString.replaceAll(temp,"\\\\","\\");
-			File file = new File(temp);
+
+			File file = makeFile(data.root+data.wDir+args);
 			
 			if( file.canRead() ) {
 				handler.sendClientMsg("150 Opening data connection for LIST "+data.wDir+args);
@@ -416,7 +421,7 @@ public class CommandHandler implements ClientCommandHandler {
 						return;
 					}			
 				}
-				String result = winDirList(temp);
+				String result = winDirList(file);
 				try	{
 					data.sendData(result);
 					//close data connection when done
@@ -433,6 +438,7 @@ public class CommandHandler implements ClientCommandHandler {
 						data.socket.close();
 					data.closeDataServer = true;
 					handler.sendClientMsg("551 Error sending LIST : "+e);
+					logger.log(Level.WARNING, "Error: "+e, e);
 				}
 			} else {
 				handler.sendClientMsg("550 No such directory : "+data.wDir+args);
@@ -448,9 +454,8 @@ public class CommandHandler implements ClientCommandHandler {
 			} else {
 				args = command.substring("NLST".length()).trim();
 			}
-			temp = MyString.replaceAll(data.root+data.wDir+args,"/","\\");
-			temp = MyString.replaceAll(temp,"\\\\","\\");
-			File file = new File(temp);
+
+			File file = makeFile(data.root+data.wDir+args);
 			String result = "";
 			if( file.canRead() && file.isDirectory() ) {
 				handler.sendClientMsg("150 Opening data connection for LIST "+data.wDir+args);
@@ -485,6 +490,7 @@ public class CommandHandler implements ClientCommandHandler {
 						data.socket.close();
 					data.closeDataServer = true;
 					handler.sendClientMsg("551 Error sending NLST : "+e);
+					logger.log(Level.WARNING, "Error: "+e, e);
 				}
 			} else {
 				handler.sendClientMsg("550 No such directory : "+data.wDir+args);
@@ -509,9 +515,18 @@ public class CommandHandler implements ClientCommandHandler {
 		} else if(ucCommand.startsWith("SIZE")) {
 			//SIZE OF FILE
 			args = command.substring("SIZE".length()).trim();
-			temp = MyString.replaceAll(data.root+data.wDir+args,"/","\\");
-			temp = MyString.replaceAll(temp,"\\\\","\\");
-			File file = new File(temp);
+			File file = null;
+			
+			logger.log(Level.FINE, "data.root: {0}", data.root);
+			logger.log(Level.FINE, "data.wDir: {0}", data.wDir);
+			logger.log(Level.FINE, "args: {0}", args);
+			
+			if(args.startsWith("/")) {
+				file = makeFile(data.root+args);
+			} else {
+				file = makeFile(data.root+data.wDir+args);
+			}
+			
 			if( file.canRead() ) {
 				handler.sendClientMsg("213 "+file.length());
 			} else {
@@ -560,31 +575,31 @@ public class CommandHandler implements ClientCommandHandler {
 		return result;
 	}
 
-	private String winDirList(String dir) {
-		File file = new File(dir);
+	private String winDirList(File file) {
 		File subFile = null;
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		if( file.canRead() ) {
 			String list[] = file.list();
+			logger.log(Level.FINE, "dir size: " + list.length);
+			SimpleDateFormat dformat = new SimpleDateFormat("MM-dd-yy  HH:mm:a ");
+			
 			for(int i=0;i<list.length;i++) {
-				subFile = new File(dir+File.separator+list[i]);
-				SimpleDateFormat dformat = 
-					new SimpleDateFormat("MM-dd-yy  HH:mm:a ");
-				result += dformat.format(new Date(subFile.lastModified()));
+				subFile = new File(file.getAbsolutePath()+File.separator+list[i]);				
+				result.append( dformat.format(new Date(subFile.lastModified())) );
 				if(subFile.isFile()) {
 					//20 field length
-					StringBuffer size = new StringBuffer(20);
+					StringBuilder size = new StringBuilder(20);
 					size.append(subFile.length());
 					while(size.length()<20) {
 						size.insert(0," ");
 					}
-					result += size.toString();
+					result.append( size.toString() );
 				} else {
-					result +="      <DIR>         ";
+					result.append( "      <DIR>         ");
 				}
-				result +=" "+list[i]+"\r\n";
+				result.append(" ").append(list[i]).append( "\r\n");
 			}
 		}
-		return result;
+		return result.toString();
 	}
 }

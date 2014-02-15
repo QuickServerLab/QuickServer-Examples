@@ -232,7 +232,14 @@ public class TestEchoServer {
 			} catch(NumberFormatException nfe) {}
 		}
 		
-
+		System.out.println("=======================");
+		System.out.println("Server: "+addr);
+		System.out.println("Port: "+port);
+		System.out.println("Threads: "+MAX_THREADS);
+		System.out.println("Client Junk Count: "+MyTestClientThread.clientJunkCount);
+		System.out.println("Client Sleep Time: "+MyTestClientThread.clientJunkSleep);
+		System.out.println("=======================");
+		
 		new MyTestClientThread(addr,port);				
 		while(true) {
 			Thread.currentThread().sleep(getSleepTime());

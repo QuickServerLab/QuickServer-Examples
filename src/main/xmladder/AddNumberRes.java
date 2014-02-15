@@ -30,7 +30,7 @@ import java.io.*;
  */
 public class AddNumberRes {
 	private static Logger logger = Logger.getLogger(AddNumberRes.class.getName());
-	private static Digester digester = null;
+	private static final Digester digester;
 
 	static {
 		digester = new Digester();

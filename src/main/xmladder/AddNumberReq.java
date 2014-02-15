@@ -28,20 +28,21 @@ public class AddNumberReq {
 	private static Logger logger = Logger.getLogger(AddNumberReq.class.getName());
 	//make true for performance testing 
 	private static boolean performanceTest = false;
-	private static Digester digester = null;
 
 	static {
 		performanceTest = Boolean.getBoolean("xmladder.AddNumberReq.performanceTest");
+	}
+	
+	private static Digester getDigester() {
+		Digester _digester = new Digester();
+		_digester.setValidating(false);
+		_digester.setUseContextClassLoader(true);
+		String mainTag = "add-number-req";
+		_digester.addObjectCreate(mainTag, AddNumberReq.class);
+		_digester.addBeanPropertySetter(mainTag+"/number-a", "numberA");
+		_digester.addBeanPropertySetter(mainTag+"/number-b", "numberB");
 		
-		if(performanceTest==false) {
-			digester = new Digester();
-			digester.setValidating(false);
-			digester.setUseContextClassLoader(true);
-			String mainTag = "add-number-req";
-			digester.addObjectCreate(mainTag, AddNumberReq.class);
-			digester.addBeanPropertySetter(mainTag+"/number-a", "numberA");
-			digester.addBeanPropertySetter(mainTag+"/number-b", "numberB");
-		}
+		return _digester;
 	}
 
 	private int numberA;
@@ -76,7 +77,7 @@ public class AddNumberReq {
 	}
 
 	public String toXML() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append("<add-number-req>\n");
 		sb.append("\t<number-a>").append(getNumberA()).append("</number-a>\n");
 		sb.append("\t<number-b>").append(getNumberB()).append("</number-b>\n");
@@ -88,9 +89,9 @@ public class AddNumberReq {
 			throws IOException, org.xml.sax.SAXException {
 		AddNumberReq addNumberReq = null;
 		if(performanceTest==false) {
-			logger.fine("Got xml:\n"+ data);
+			logger.log(Level.FINE, "Got xml:\n{0}", data);
 			
-			addNumberReq = (AddNumberReq) digester.parse(
+			addNumberReq = (AddNumberReq) getDigester().parse(
 				new ByteArrayInputStream(data.getBytes("UTF-8")));
 		} else {
 			addNumberReq = new AddNumberReq();

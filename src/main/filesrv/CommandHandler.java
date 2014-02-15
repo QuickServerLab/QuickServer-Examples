@@ -27,22 +27,22 @@ import org.quickserver.util.MyString;
  */
 public class CommandHandler 
 		implements ClientEventHandler, ClientCommandHandler, ClientWriteHandler {
-	private static Logger logger = 
+	private static final Logger logger = 
 		Logger.getLogger(CommandHandler.class.getName());
 
 	public void gotConnected(ClientHandler handler)
 			throws SocketTimeoutException, IOException {
-		logger.fine("Connection opened: "+handler.getSocket().getInetAddress());
+		logger.log(Level.FINE, "Connection opened: {0}", handler.getSocket().getInetAddress());
 		//handler.setDataMode(DataMode.BYTE, DataType.OUT); //pick from xml
 	}
 
 	public void lostConnection(ClientHandler handler) throws IOException {
 		cleanByteBuffer(handler);
-		logger.fine("Connection lost: "+handler.getSocket().getInetAddress());		
+		logger.log(Level.FINE, "Connection lost: {0}", handler.getSocket().getInetAddress());		
 	}
 	public void closingConnection(ClientHandler handler) throws IOException {
 		cleanByteBuffer(handler);
-		logger.fine("Connection closed: "+handler.getSocket().getInetAddress());
+		logger.log(Level.FINE, "Connection closed: {0}", handler.getSocket().getInetAddress());
 	}
 	private void cleanByteBuffer(ClientHandler handler) {
 		Data data = (Data)handler.getClientData();
@@ -99,11 +99,11 @@ public class CommandHandler
 			throws IOException {
 		String content = data.getDirList();
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append("HTTP/1.1 200 OK\r\n");
 		sb.append("Server: ").append(handler.getServer().getName()).append("\r\n");
 		sb.append("Content-Type: text/html").append("\r\n");;
-		sb.append("Content-Length: "+content.length()).append("\r\n");;
+		sb.append("Content-Length: ").append(content.length()).append("\r\n");;
 		sb.append("\r\n");
 		sb.append(content);
 
@@ -111,7 +111,7 @@ public class CommandHandler
 			handler.sendClientBytes(sb.toString());
 			handler.closeConnection();
 		} else {
-			logger.fine("Will Send: \n"+sb.toString());
+			logger.log(Level.FINE, "Will Send: \n{0}", sb.toString());
 			data.makeNonBlockingWrite(handler, sb.toString().getBytes(), 
 				false, "Sending HTTP header with dir list.", true);
 		}
@@ -122,12 +122,12 @@ public class CommandHandler
 	}
 
 	private void serveBadRequest(ClientHandler handler, String error, String msg)  throws IOException  {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("HTTP/1.1 ").append(msg).append("\r\n");
 		sb.append("Server: ").append(handler.getServer().getName()).append("\r\n");
 		sb.append("Content-Type: text/html").append("\r\n");;
-		sb.append("Content-Length: "+error.length()).append("\r\n");;
+		sb.append("Content-Length: ").append(error.length()).append("\r\n");;
 		sb.append("\r\n");
 		sb.append(error);
 		handler.sendClientBytes(sb.toString());

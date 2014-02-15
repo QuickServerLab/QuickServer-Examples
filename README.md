@@ -1,4 +1,4 @@
-ReadMe for QuickServer Examples
+Readme for QuickServer Examples
 -------------------------------
 
 IMPORTANT NOTE: These examples are written to demonstrate how to use some 
@@ -55,6 +55,9 @@ Uses:-
 FtpServer v 0.2
 -------------------
 Basic ftp server implementation. 
+un: anonymous
+pw: aaa@bbb.com
+
 Uses:-
  - Xml configuration file used to load configuration.
  - ServerAuthenticator extended class to add authentication.
@@ -154,5 +157,10 @@ License:
 a) All source code from the example that contain the following phrase 
    "This file is part of the QuickServer library" may be used as a starting 
    point in your development.
+
 b) chatserver.client.InfiniteProgressPanel is subjected to the BSD license. 
 
+
+Copyright (C) 2003-2014 QuickServer.org
+http://www.quickserver.org/
+https://github.com/QuickServerLab/QuickServer-Examples
