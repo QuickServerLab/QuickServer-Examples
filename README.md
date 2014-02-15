@@ -56,7 +56,6 @@ FtpServer v 0.2
 -------------------
 Basic ftp server implementation. 
 un: anonymous
-pw: aaa@bbb.com
 
 Uses:-
  - Xml configuration file used to load configuration.
