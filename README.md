@@ -6,9 +6,14 @@ of the features of QuickServer. These examples were written to be simple
 and easy to understand and not as a production versions. So the author/s have
 not taken security or performance has his main criteria. 
 
+How To build
+-------------------
+Execute ant from the Examples root folder.
+
+
 How To Run Examples
 -------------------
-Execute .sh or .bat file from the bin folder.
+Execute .sh or .bat file from the bin folder. Make sure you have built the examples using ant.
 
 Eg: $sh EchoServer.sh
 Eg: d:\QuickSerer-Example-Folder\bin>EchoServer.bat
