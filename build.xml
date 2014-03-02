@@ -10,6 +10,7 @@
             <include name="**/*.java"/>
 			 <classpath>
                 <pathelement location="lib/QuickServer.jar" />
+				<pathelement location="lib/QuickServerClient.jar" />
 				<pathelement location="lib/commons-pool.jar" />
 				<pathelement location="lib/commons-logging.jar" />
 				<pathelement location="lib/commons-digester.jar" />

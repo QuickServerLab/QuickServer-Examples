@@ -60,32 +60,22 @@
 
 	<object-pool>
 		<max-active>-1</max-active>
-		<max-idle>50</max-idle>
-		<init-size>20</init-size>
+		<max-idle>5000</max-idle>
+		<init-size>2000</init-size>
 
 		<thread-object-pool>
 			<max-active>-1</max-active>
-			<max-idle>50</max-idle>
-			<init-size>20</init-size>
+			<max-idle>5000</max-idle>
+			<init-size>2000</init-size>
 		</thread-object-pool>
 
 		<client-handler-object-pool>
 			<max-active>-1</max-active>
-			<max-idle>50</max-idle>
-			<init-size>30</init-size>
+			<max-idle>5000</max-idle>
+			<init-size>3000</init-size>
 		</client-handler-object-pool>
 
-		<byte-buffer-object-pool>
-			<max-active>-1</max-active>
-			<max-idle>50</max-idle>
-			<init-size>20</init-size>
-		</byte-buffer-object-pool>
-		
-		<client-data-object-pool>
-			<max-active>-1</max-active>
-			<max-idle>50</max-idle>
-			<init-size>20</init-size>
-		</client-data-object-pool>
+
 		
 	</object-pool>
 
