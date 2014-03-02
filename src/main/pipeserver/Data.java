@@ -22,11 +22,13 @@ import org.apache.commons.pool.PoolableObjectFactory;
 import java.net.*;
 import java.io.*;
 import java.util.logging.*;
+import org.quickserver.net.client.BlockingClient;
 
 import org.quickserver.net.server.ClientHandler;
 
 public class Data extends Thread implements ClientData, PoolableObject {
-	private static Logger logger = Logger.getLogger(Data.class.getName());
+	private static final Logger logger = Logger.getLogger(Data.class.getName());
+	private static int threadId = 0;
 
 	private static boolean logHex = false;
 	private static boolean logText = false;
@@ -36,16 +38,22 @@ public class Data extends Thread implements ClientData, PoolableObject {
 	private BufferedInputStream bin;
 	private BufferedOutputStream bout;
 
-
 	private String remoteHost = "127.0.0.1";
 	private int remotePort = 8080;
 
 	private boolean init = false;	
 	private boolean closed = false;
 	private final Object lock = new Object();
+	
+	private boolean stopThead;
 
 	public Data(){
-		super("DataThread");
+		super();
+		int tid = 0;
+		synchronized(lock) {
+			tid = ++threadId;
+		}
+		setName("DataThread-"+tid);
 		setDaemon(true);
 		start();
 	}
@@ -90,28 +98,46 @@ public class Data extends Thread implements ClientData, PoolableObject {
 	public void preclean() {
 		try	{
 			if(bin!=null) bin.close();
+		} catch(Exception e) {
+			logger.log(Level.FINE, "Error in preclean1: "+e, e);
+		}
+		
+		try	{
 			if(bout!=null) bout.close();
+		} catch(Exception e) {
+			logger.log(Level.FINE, "Error in preclean2: "+e, e);
+		}
+		
+		try	{
 			if(socket!=null) socket.close();
 		} catch(Exception e) {
-			logger.fine("Error in preclean: "+e);
+			logger.log(Level.FINE, "Error in preclean3: "+e, e);
 		}
 	}
 
 	public void run() {
-		byte data[] = null;
+		logger.log(Level.FINE, "start thread {0}", this);
+		
+		byte data[];
 		while(true) {
 			try	{
 				if(init==false) {
 					synchronized(lock) {
 						lock.wait();
 					}
-					continue;
+					
+					if(stopThead) {
+						logger.log(Level.FINE, "stop thread {0}", this);
+						return;
+					} else {
+						continue;
+					}
 				}
 				
-				data = readInputStream(bin);
+				data = BlockingClient.readInputStream(bin);
 				if(data==null) {
 					init = false;
-					logger.fine("Connection lost from remote pipe");
+					logger.fine("got eof from remote pipe");
 					handler.closeConnection();
 				} else {
 
@@ -128,7 +154,7 @@ public class Data extends Thread implements ClientData, PoolableObject {
 				if(closed==false) {
 					logger.warning("Error in data thread : "+e);
 				} else {
-					logger.fine("Error after connection was closed in data thread : "+e);
+					//logger.fine("Error after connection was closed in data thread : "+e);
 				}
 				//e.printStackTrace();
 			}
@@ -159,6 +185,10 @@ public class Data extends Thread implements ClientData, PoolableObject {
 	}
 
 	public void clean() {
+		if(socket!=null && socket.isConnected()) {
+			preclean();
+		}
+		
 		socket = null;
 		init = false;
 		handler = null;
@@ -183,48 +213,35 @@ public class Data extends Thread implements ClientData, PoolableObject {
 			} 
 			public void destroyObject(Object obj) {
 				if(obj==null) return;
+				
+				Data data = (Data) obj;
+				data.stopThead = true;
+				
+				synchronized(data.lock) {
+					data.lock.notify();
+				}
+				
 				passivateObject(obj);
+				
 				obj = null;
 			}
 			public boolean validateObject(Object obj) {
 				if(obj==null) 
 					return false;
-				else
-					return true;
+				else {
+					Data data = (Data) obj;
+					if(data.isAlive()) {
+						return true;
+					} else {
+						return false;
+					}
+				}
 			}
 		};
 	}
 
 	//-- helper methods --
-	protected static byte[] readInputStream(InputStream _in) throws IOException {
-		byte data[] = null;
-		if(_in==null)
-			throw new IOException("InputStream can't be null!");
-		
-		int s = _in.read();
-		if(s==-1) {
-			return null; //Connection lost
-		}
-		int alength = _in.available();
-		if(alength > 0) {
-			data = new byte[alength+1];	
-			data[0] = (byte) s;
-			int len = _in.read(data, 1, alength);
-			if(len < alength) {
-				data = copyOf(data, len+1);
-			}
-		} else {
-			data = new byte[1];
-			data[0] = (byte) s;
-		}
-		return data;
-	}
-
-	private static byte[] copyOf(byte data[], int len) {
-		byte newdate[] = new byte[len];
-		System.arraycopy(data, 0, newdate, 0, len);
-		return newdate;
-	}
+	
 
 	public static String hexencode(byte[] rawData) {
 		StringBuilder hexText = new StringBuilder();
