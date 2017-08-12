@@ -165,6 +165,6 @@ a) All source code from the example that contain the following phrase
 b) chatserver.client.InfiniteProgressPanel is subjected to the BSD license. 
 
 
-Copyright (C) 2003-2014 QuickServer.org
+Copyright (C) 2003-2017 QuickServer.org
 http://www.quickserver.org/
 https://github.com/QuickServerLab/QuickServer-Examples
