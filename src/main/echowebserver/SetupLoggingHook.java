@@ -41,6 +41,9 @@ public class SetupLoggingHook implements InitServerHook {
 		try	{
 			logger = Logger.getLogger("");
 			logger.setLevel(Level.FINEST);
+                        
+            logger = Logger.getLogger("sun.rmi.server.");//jconsole
+			logger.setLevel(Level.INFO);
 			
 			/*
 			logger = Logger.getLogger("org.quickserver");

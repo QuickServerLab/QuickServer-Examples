@@ -32,6 +32,9 @@ public class Data extends Thread implements ClientData, PoolableObject {
 
 	private static boolean logHex = false;
 	private static boolean logText = false;
+    
+    private static boolean enabledDelayedClose = false;
+    private static long dealyCloseTime = 1000;
 
 	private Socket socket;
 	private ClientHandler handler;
@@ -138,14 +141,22 @@ public class Data extends Thread implements ClientData, PoolableObject {
 				if(data==null) {
 					init = false;
 					logger.fine("got eof from remote pipe");
-					handler.closeConnection();
+                                        if(enabledDelayedClose==false) {
+                                            handler.closeConnection();
+                                        } else {
+                                            logger.fine("delaye close..");
+                                            sleep(dealyCloseTime);
+                                            if(handler.isClosed()==false) {
+                                                handler.closeConnection();
+                                            }
+                                        }
 				} else {
 
 					if(logText) {
-						logger.fine("S:Text: "+new String(data));
+						logger.log(Level.FINE, "S:Text: {0}", new String(data));
 					}
 					if(logHex) {
-						logger.fine("S:Hex : "+hexencode(data));
+						logger.log(Level.FINE, "S:Hex : {0}", hexencode(data));
 					}
 					handler.sendClientBinary(data);
 				}
