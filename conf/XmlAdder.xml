@@ -33,27 +33,20 @@
 		</class-name>
 	</init-server-hooks>
 
-	<server-mode>
-		<blocking>true</blocking>
-	</server-mode>
-
 	<object-pool>
 		<max-active>-1</max-active>
-		<max-idle>200</max-idle>
+		<max-idle>20</max-idle>
 
 		<thread-object-pool>
-			<max-active>500</max-active>
-			<max-idle>100</max-idle>
+			<max-active>50</max-active>
+			<max-idle>10</max-idle>
 		</thread-object-pool>
 	</object-pool>
 
 	<advanced-settings>
 		<charset>ISO-8859-1</charset>
-		<use-direct-byte-buffer>true</use-direct-byte-buffer>
-		<!--<byte-buffer-size>61440</byte-buffer-size>-->
 		<backlog>1024</backlog>		
 		<socket-linger>-1</socket-linger>
-		<debug-non-blocking-mode>false</debug-non-blocking-mode> 
 	</advanced-settings>
 	
 	<!-- Config QSAdminServer -->
@@ -68,9 +61,6 @@
 		<communication-logging>
 			<enable>false</enable>
 		</communication-logging>
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 	</qsadmin-server>
 	<!-- Config QSAdminServer -->
 	

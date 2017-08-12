@@ -16,9 +16,6 @@
 	<max-connection>10</max-connection>
 	<max-connection-msg>421 Server Busy</max-connection-msg>
 
-	<server-mode>
-		<blocking>true</blocking>
-	</server-mode>
 
 	<!-- Config QSAdminServer -->
 	<qsadmin-server>
@@ -36,9 +33,6 @@
 		<communication-logging>
 			<enable>false</enable>
 		</communication-logging>
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 	</qsadmin-server>
 	<!-- Config QSAdminServer -->
 
@@ -49,14 +43,14 @@
 	</console-logging-formatter>
 	<!-- Config Console Logging -->
 
-	<!--
+	<!-- -->
 	<application-configuration>
 		<property>
 			<property-name>FTP_ROOT</property-name>
-			<property-value>G:\MP3</property-value>
+			<property-value>/Users/akshath/Dropbox/development/QuickServer/git/QuickServer-Main/build/</property-value>
 		</property>
 	</application-configuration>
-	-->	
+	<!-- -->	
 
 	<communication-logging>
 		<enable>true</enable>

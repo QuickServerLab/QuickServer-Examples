@@ -39,10 +39,6 @@
 	</client-extended-event-handler>
 	-->
 
-	<server-mode>
-		<blocking>true</blocking>
-	</server-mode>
-
 	<default-data-mode>
 		<data-type-in>String</data-type-in>
 		<data-type-out>String</data-type-out>
@@ -60,29 +56,27 @@
 
 	<object-pool>
 		<max-active>-1</max-active>
-		<max-idle>5000</max-idle>
-		<init-size>2000</init-size>
+		<max-idle>50</max-idle>
+		<init-size>20</init-size>
 
 		<thread-object-pool>
 			<max-active>-1</max-active>
-			<max-idle>5000</max-idle>
-			<init-size>2000</init-size>
+			<max-idle>50</max-idle>
+			<init-size>20</init-size>
 		</thread-object-pool>
 
 		<client-handler-object-pool>
 			<max-active>-1</max-active>
-			<max-idle>5000</max-idle>
-			<init-size>3000</init-size>
-		</client-handler-object-pool>
-
-
-		
+			<max-idle>50</max-idle>
+			<init-size>30</init-size>
+		</client-handler-object-pool>		
 	</object-pool>
 
 	<communication-logging>
 		<enable>false</enable>
 	</communication-logging>	
 
+    <!--
 	<db-object-pool>
 		<database-connection-set>
 			<database-connection>
@@ -95,6 +89,7 @@
 		</database-connection-set>
 		<db-pool-util>echoserver.DBPoolUtil</db-pool-util>
 	</db-object-pool>
+    -->
 
 	<application-configuration>
 		<prompt-type>gui</prompt-type>
@@ -160,10 +155,6 @@
 		<communication-logging>
 			<enable>false</enable>
 		</communication-logging>
-
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 
 		<access-constraint>
 		  <ip-filter> 

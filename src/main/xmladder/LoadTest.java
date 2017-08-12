@@ -20,13 +20,12 @@ import java.util.*;
 
 public class LoadTest {
 	private Agent agents[] = null;
-	private ThreadGroup agentGroup = null;
+	private final ThreadGroup agentGroup = new ThreadGroup("AgentGroup");
 	private List times = null;
 
 	public void init(int count, String host, int port) {
 		System.out.print("Starting init..");
-		agentGroup = new ThreadGroup("AgentGroup");
-		times = new ArrayList(count);
+		times = Collections.synchronizedList(new ArrayList(count));
 		agents = new Agent[count];
 		for(int i=0;i<count;i++) {
 			agents[i] = new Agent(agentGroup, times, host, port);
@@ -37,30 +36,19 @@ public class LoadTest {
 
 	public void test() throws InterruptedException {
 		int count = agents.length;
-		int half = count/2;
+		
 
 		System.out.print("Starting test..");
+		
+		
 		long stime = System.currentTimeMillis();
-		long htime = -1;
-		long hcount = -1;
-
-		/*
-		for(int i=0;i<count;i++)
-			agents[i].start();
-		*/
 		synchronized(agentGroup) {
 			agentGroup.notifyAll();
 		}
 
-		int ac = times.size();
-		while(ac<count) {
-			if(htime<0 && half>=ac) {
-				htime = System.currentTimeMillis();
-				hcount = count-ac;
-			}
-			Thread.sleep(5);
-			ac = times.size();
-		}
+		for(int i=0;i<count;i++) {
+			agents[i].join();
+		}		
 
 		long etime = System.currentTimeMillis();
 		System.out.println("Done\n");
@@ -72,15 +60,7 @@ public class LoadTest {
 		time = time/count;
 		System.out.println("Avg. Time  : "+time+"ms\n");
 
-		/*
-		if(htime!=-1) {
-			time = htime - stime;
-			System.out.println("Half Time ("+hcount+"): "+time+"ms");
-			time = time/hcount;
-			System.out.println("Half Avg Time: "+time+"ms");
-		}
-		*/
-
+		
 		/*
 		System.out.println("\nEach Client time..\n");
 		for(int i=0;i<count;) {

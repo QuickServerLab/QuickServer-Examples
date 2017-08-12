@@ -24,10 +24,6 @@
 		<enable>true</enable>
 	</communication-logging>
 
-	<server-mode>
-		<blocking>true</blocking>
-	</server-mode>
-
 	<server-hooks>
 		<class-name>echowebserver.PrepareHook</class-name>
 	</server-hooks>
@@ -53,9 +49,6 @@
 			<enable>true</enable>
 			<prompt-name>QSAdmin</prompt-name>
 		</command-shell>
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 
 		<object-pool>
 			<max-active>10</max-active>
@@ -99,10 +92,7 @@
 
 	<advanced-settings>
 		<charset>ISO-8859-1</charset>
-		<use-direct-byte-buffer>true</use-direct-byte-buffer>
-		<!--<byte-buffer-size>61440</byte-buffer-size>-->
 		<backlog>1024</backlog>		
 		<socket-linger>-1</socket-linger>
-		<debug-non-blocking-mode>true</debug-non-blocking-mode> 
 	</advanced-settings>
 </quickserver>

@@ -16,10 +16,6 @@
 		chatserver.ChatAuthenticator
 	</client-authentication-handler>
 
-	<server-mode>
-		<blocking>true</blocking>
-	</server-mode>
-	
 	<!-- 3 min. (in milliseconds) -->
 	<timeout>180000</timeout>
 	<console-logging-level>WARNING</console-logging-level>
@@ -60,10 +56,6 @@
 		<name>QSAdminServer v 1.0</name>
 		<port>7413</port>
 		<bind-address>127.0.0.1</bind-address>
-
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 
 		<client-authentication-handler>
 			chatserver.QsAdminAuthenticator

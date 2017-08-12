@@ -22,10 +22,6 @@
 		<data-type-out>Binary</data-type-out>
 	</default-data-mode>
 
-	<server-mode>
-		<blocking>false</blocking>
-	</server-mode>
-
 	<max-connection>10</max-connection>
 	<console-logging-level>INFO</console-logging-level>
 	<console-logging-formatter>

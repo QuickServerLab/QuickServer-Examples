@@ -14,9 +14,6 @@
 		<data-type-out>String</data-type-out>
 	</default-data-mode>
 
-	<server-mode>
-		<blocking>false</blocking>
-	</server-mode>
 
 	<max-connection>-1</max-connection>
 	<console-logging-level>INFO</console-logging-level>
@@ -48,9 +45,6 @@
 		<communication-logging>
 			<enable>false</enable>
 		</communication-logging>
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 	</qsadmin-server>
 	<!-- Config QSAdminServer -->
 
@@ -62,6 +56,5 @@
 		<!--<byte-buffer-size>61440</byte-buffer-size>-->
 		<backlog>0</backlog>		
 		<socket-linger>-1</socket-linger>
-		<debug-non-blocking-mode>false</debug-non-blocking-mode>
 	</advanced-settings>
 </quickserver>

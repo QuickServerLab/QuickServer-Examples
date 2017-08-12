@@ -1,1 +1,1 @@
-@java -server -cp %classpath%;.\..\lib\QuickServer.jar;.\..\dist\pipeserver.jar pipeserver.PipeServer
+@java -server -cp %classpath%;.\..\lib\QuickServer.jar;.\..\lib\QuickServerClient.jar;.\..\dist\pipeserver.jar pipeserver.PipeServer

@@ -141,15 +141,15 @@ public class Data extends Thread implements ClientData, PoolableObject {
 				if(data==null) {
 					init = false;
 					logger.fine("got eof from remote pipe");
-                                        if(enabledDelayedClose==false) {
-                                            handler.closeConnection();
-                                        } else {
-                                            logger.fine("delaye close..");
-                                            sleep(dealyCloseTime);
-                                            if(handler.isClosed()==false) {
-                                                handler.closeConnection();
-                                            }
-                                        }
+                    if(enabledDelayedClose==false) {
+                        handler.closeConnection();
+                    } else {
+                        logger.fine("delaye close..");
+                        sleep(dealyCloseTime);
+                        if(handler.isClosed()==false) {
+                            handler.closeConnection();
+                        }
+                    }
 				} else {
 
 					if(logText) {

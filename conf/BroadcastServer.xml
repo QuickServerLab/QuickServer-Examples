@@ -20,10 +20,6 @@
 	<timeout-msg>-ERR Timeout</timeout-msg>
 	<max-auth-try-msg>-ERR Max Auth Try Reached</max-auth-try-msg>
 
-	<server-mode>
-		<blocking>false</blocking>
-	</server-mode>
-
 	<default-data-mode>
 		<data-type-in>String</data-type-in>
 		<data-type-out>String</data-type-out>
@@ -118,10 +114,6 @@
 		<communication-logging>
 			<enable>false</enable>
 		</communication-logging>
-
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 
 		<access-constraint>
 		  <ip-filter> 

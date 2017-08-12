@@ -3,10 +3,6 @@
 	<port>8821</port>
 	<bind-address>0.0.0.0</bind-address>
 
-	<server-mode>
-		<blocking>false</blocking>
-	</server-mode>
-
 	<client-event-handler>
 		filesrv.CommandHandler
 	</client-event-handler>	
@@ -56,21 +52,14 @@
 			<prompt-name>Filesrv</prompt-name>
 		</command-shell>
 
-		<server-mode>
-			<blocking>false</blocking>
-		</server-mode>
 	</qsadmin-server>
 
 	<application-jar-path>../dist/filesrv.jar</application-jar-path>
 
 	<advanced-settings>		
 		<charset>ISO-8859-1</charset>
-		<use-direct-byte-buffer>true</use-direct-byte-buffer>
-		<byte-buffer-size>1048576</byte-buffer-size>
 		<backlog>0</backlog>		
 		<socket-linger>-1</socket-linger>
-		<debug-non-blocking-mode>false</debug-non-blocking-mode>
-		<max-threads-for-nio-write>1</max-threads-for-nio-write>
 	</advanced-settings>
 
 	<application-configuration>
